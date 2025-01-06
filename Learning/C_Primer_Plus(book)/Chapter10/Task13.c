@@ -30,13 +30,14 @@ int main(void)
 
 void out_data(double ar[][SIZE_1], int s_0, double av_all, double av_s0[], double h_n)
 {
+    putchar('\n');
     printf("=> Сам двумерный массив:\n");
     for (int c = 0; c < s_0; c++)
     {
         printf("%d:{", c);
         for (int i = 0; i < SIZE_1; i++)
         {
-            printf("%lf, ", ar[c][i]);
+            printf("%.3lf, ", ar[c][i]);
         }
         printf("}\n");
     }
@@ -45,16 +46,16 @@ void out_data(double ar[][SIZE_1], int s_0, double av_all, double av_s0[], doubl
     printf("=> Среднее для каждого подмассива:\n");
     for (int c = 0; c < s_0; c++)
     {
-        printf("%d: %.1lf\n", c, av_s0[c]);
+        printf("%d: %.3lf\n", c, av_s0[c]);
     }
     putchar('\n');
 
     printf("=> Среднее для всего двумерного массива:\n");
-    printf("%.1lf\n", av_all);
+    printf("%.3lf\n", av_all);
     putchar('\n');
 
     printf("=> Наибольшее значение во всём массиве:\n");
-    printf("%.1lf\n", h_n);
+    printf("%.3lf\n", h_n);
     putchar('\n');
 
     return;
@@ -111,7 +112,7 @@ void ask_array(double ar[][SIZE_1], int s_0)
 {
     for (int c = 0; c < s_0; c++)
     {
-        printf("?> Введите 5 чисел через пробел (ещё %d раз): ", (s_0 - c));
+        printf("?> Введите 5 чисел через пробел (ещё %d раз): ", (s_0 - (c + 1)));
         scanf("%lf %lf %lf %lf %lf", &ar[c][0], &ar[c][1], &ar[c][2], &ar[c][3], &ar[c][4]);
         while (getchar() != '\n') continue;
     }
