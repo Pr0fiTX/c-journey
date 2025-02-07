@@ -8,6 +8,7 @@
 void sortstrings(int action, int n_ch, int n_str, char ar[][n_ch]) { // TODO:
   int curs_3;
   int str_by_lenght_3[n_str];
+  int str_out_order_3[n_str];
 
   if (action == 1) { // <- out original Strings
     printf("=> Strings:\n");
@@ -22,18 +23,26 @@ void sortstrings(int action, int n_ch, int n_str, char ar[][n_ch]) { // TODO:
     for (int s = 0; s < n_str; s++) {
       str_by_lenght_3[s] =
           (strlen(ar[s]) - 1); // НЕ учитывается '\n' (который присутствует)
-      printf("=> lenght of %d str -> %d\n", s + 1, str_by_lenght_3[s]); // WARN:
+      printf("=> lenght of %d str -> %d\n", s + 1,
+             str_by_lenght_3[s]); // WARN:DB
     }
-    for (int c = 0; c < n_str; c++) {
+    for (int c = 0; c < (n_str - 1); c++) {
       curs_3 = str_by_lenght_3[0];
       for (int s = 0; s < (n_str - 1); s++) {
-        if (str_by_lenght_3[curs_3] > str_by_lenght_3[s + 1]) {
-          curs_3 = (s + 1);
+        if (str_by_lenght_3[s] > str_by_lenght_3[s + 1]) {
+          curs_3 = str_by_lenght_3[s];
+          str_by_lenght_3[s] = str_by_lenght_3[s + 1];
+          str_by_lenght_3[s + 1] = curs_3;
+          // -------------------------------
         }
       }
-      printf("%d> %s", c + 1, ar[curs_3]);
-      str_by_lenght_3[curs_3] = (NUM_CHAR + 1 + c);
+      for (int d = 0; d < n_str; d++) { // WARN:DB
+        printf("%d> %d\n", (d + 1), str_by_lenght_3[d]);
+      }
     }
+    /* for (int c = 0; c < n_str; c++) { */
+    /*   printf("%d> %s", c, )      */
+    /* } */
   } else if (action == 4) { // out all strings by lenght of first word
     return;
   } else {
