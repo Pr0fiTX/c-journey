@@ -24,7 +24,7 @@ void sortstrings(int action, int n_ch, int n_str, char ar[][n_ch]) { // TODO:
           (strlen(ar[s]) - 1); // НЕ учитывается '\n' (который присутствует)
       printf("=> lenght of %d str -> %d\n", s + 1, str_by_lenght_3[s]); // WARN:
     }
-    for (int c = 1; c < n_str; c++) {
+    for (int c = 0; c < n_str; c++) {
       curs_3 = str_by_lenght_3[0];
       for (int s = 0; s < (n_str - 1); s++) {
         if (str_by_lenght_3[curs_3] > str_by_lenght_3[s + 1]) {
