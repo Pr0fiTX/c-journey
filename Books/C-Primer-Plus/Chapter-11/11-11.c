@@ -1,14 +1,15 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
+
 #define MAX_STR 10
 #define NUM_CHAR 128
 #define EXIT_MENU 5 // <- символ для выхода
 
-void sortstrings(int action, int n_ch, int n_str, char ar[][n_ch]) { // TODO:
-  int curs_3;
-  int str_by_lenght_3[n_str];
-  int str_out_order_3[n_str];
+void sortstrings(int action, int n_ch, int n_str, char ar[][n_ch]) {
+  int temp_3;                 // буффер
+  int str_by_lenght_3[n_str]; // длинны строк
+  int str_out_order_3[n_str]; // порядок строк
 
   if (action == 1) { // <- out original Strings
     printf("=> Strings:\n");
@@ -21,33 +22,32 @@ void sortstrings(int action, int n_ch, int n_str, char ar[][n_ch]) { // TODO:
   } else if (action == 3) { // out all strings by they lenght
     printf("=> Strings (by lenght)\n");
     for (int s = 0; s < n_str; s++) {
-      str_by_lenght_3[s] =
-          (strlen(ar[s]) - 1); // НЕ учитывается '\n' (который присутствует)
-      printf("=> lenght of %d str -> %d\n", s + 1,
-             str_by_lenght_3[s]); // WARN:DB
+      str_by_lenght_3[s] = (strlen(ar[s])); // '\n' - учитывается
     }
-    for (int c = 0; c < (n_str - 1); c++) {
-      curs_3 = str_by_lenght_3[0];
-      for (int s = 0; s < (n_str - 1); s++) {
+    for (int l = 0; l < n_str; l++) { // запись всех номеров строк в массив
+      str_out_order_3[l] = l;
+    }
+    for (int c = 0; c < n_str - 1; c++) {
+      for (int s = 0; s < (n_str - c - 1); s++) {
         if (str_by_lenght_3[s] > str_by_lenght_3[s + 1]) {
-          curs_3 = str_by_lenght_3[s];
+          // сдвигаем длинны в массиве для обновления условия
+          temp_3 = str_by_lenght_3[s];
           str_by_lenght_3[s] = str_by_lenght_3[s + 1];
-          str_by_lenght_3[s + 1] = curs_3;
-          // -------------------------------
+          str_by_lenght_3[s + 1] = temp_3;
+          // меняем последовательность строк
+          temp_3 = str_out_order_3[s];
+          str_out_order_3[s] = str_out_order_3[s + 1];
+          str_out_order_3[s + 1] = temp_3;
         }
       }
-      for (int d = 0; d < n_str; d++) { // WARN:DB
-        printf("%d> %d\n", (d + 1), str_by_lenght_3[d]);
-      }
     }
-    /* for (int c = 0; c < n_str; c++) { */
-    /*   printf("%d> %s", c, )      */
-    /* } */
+    for (int c = 0; c < n_str; c++) { // вывод строк
+      printf("%d> %s", (c + 1), ar[str_out_order_3[c]]);
+    }
   } else if (action == 4) { // out all strings by lenght of first word
     return;
   } else {
     printf("!> Wrong option, try again!\n");
-    return;
   }
   return;
 }
