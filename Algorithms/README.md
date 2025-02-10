@@ -1,2 +1,2 @@
-# They're all ***empty***
-for now...
+# Various useful algorithms written in C
+...wrapped in simple programs
