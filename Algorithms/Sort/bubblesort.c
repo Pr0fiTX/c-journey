@@ -122,10 +122,10 @@ int main(void) {
       numbers_count++;
     }
   }
-  for (int i = 0; i < numbers_count; i++) { // WARN:DB
-    printf("%d\n", array[i]);
-  }
-  putchar('\n');
+  /* for (int i = 0; i < numbers_count; i++) { // WARN:DB */
+  /*   printf("%d\n", array[i]); */
+  /* } */
+  /* putchar('\n'); */
 
   bubblesort(array, numbers_count);
 
