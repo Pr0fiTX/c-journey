@@ -13,6 +13,7 @@ int main(void) {
   while (units != ANSW) {
     critic(&units);
   }
+  printf("=> Ya knew it!\n");
 
   return 0;
 }
