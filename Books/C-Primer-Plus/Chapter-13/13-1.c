@@ -1,55 +1,53 @@
 #include <stdbool.h>
+#include <stddef.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-const short FILE_NAME_SIZE = 100;
+#define FILE_NAME_SIZE 100
 
-void cutnewline(char *s) {
-  int c = 0;
+void cut_new_line(char *s) {
+  char *nl_char;
 
-  while (s[c] != '\n' && s[c] != '\0') {
-    c++;
+  nl_char = strchr(s, '\n');
+  if (nl_char) {
+    *nl_char = '\0';
   }
-  if (s[c] == '\n') {
-    s[c] = '\0';
-  }
-  return;
 }
 
-void cbuff(void) {
-  while (getchar() != '\n') {
-    continue;
+void clear_buff(void) {
+  int ch;
+  while ((ch = getchar()) != '\n' && ch != EOF) {
   }
 }
 
 int main(void) {
   char file_name[FILE_NAME_SIZE];
-  FILE *file_p;
-  unsigned long counter = 0;
+  FILE *fp;
+  size_t counter = 0;
   int ch;
 
   while (true) { // Body of entire program
     printf("?> Type the name of the file to be opened: ");
     if (fgets(file_name, FILE_NAME_SIZE, stdin) == NULL) {
       printf("!> An error occurred while reading the file name.\n");
-      cbuff();
+      clear_buff();
       continue;
     }
-    cutnewline(file_name);
+    cut_new_line(file_name);
 
-    file_p = fopen(file_name, "r");
-    if (file_p == NULL) {
+    fp = fopen(file_name, "r");
+    if (fp == NULL) {
       printf("!> The file doesn't exist or is unreadable.\n");
       continue;
     }
-    printf("=> File opned succesfuly.\n");
+    printf("=> File opened succesfuly.\n");
 
-    ch = getc(file_p);
-    while (ch != EOF) {
-      ch = getc(file_p);
+    while ((ch = getc(fp)) != EOF) {
       counter++;
     }
-    printf("=> File: %s\n> Count of letters -> %lu\n", file_name, counter);
-    return 0;
+    printf("=> File: %s\n> Count of characters -> %zu\n", file_name, counter);
+    fclose(fp);
+    return EXIT_SUCCESS;
   }
-  return 0;
 }
