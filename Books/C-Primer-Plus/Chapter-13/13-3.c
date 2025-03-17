@@ -4,6 +4,7 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define MAX_PATH_LEN 1024
 #define BUFF_SIZE 512
@@ -33,12 +34,11 @@ FILE *open_from(char *path) {
 
   printf("?> The path to the file to copy from: ");
   fgets(path, MAX_PATH_LEN, stdin);
-  for (int i = 0; i < MAX_PATH_LEN; i++) {
-    if (path[i] == '\n') {
-      path[i] = '\0';
-      break;
-    }
+  if (!strchr(path, '\n')) {
+    printf("!> Path too long.\n");
+    exit(EXIT_FAILURE);
   }
+  path[strcspn(path, "\n")] = '\0';
   if (!(fp = fopen(path, "r"))) {
     printf("!> File doesn't exist.\n");
     exit(EXIT_FAILURE);
@@ -53,12 +53,11 @@ FILE *open_to(char *path) {
 
   printf("?> Path to the file to copy to: ");
   fgets(path, MAX_PATH_LEN, stdin);
-  for (int i = 0; i < MAX_PATH_LEN; i++) {
-    if (path[i] == '\n') {
-      path[i] = '\0';
-      break;
-    }
+  if (!strchr(path, '\n')) {
+    printf("!> Path too long.\n");
+    exit(EXIT_FAILURE);
   }
+  path[strcspn(path, "\n")] = '\0';
   if (!(fp = fopen(path, "w"))) {
     printf("!> Directory doesn't exist or permissions issue.\n");
     exit(EXIT_FAILURE);
