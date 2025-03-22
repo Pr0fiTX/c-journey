@@ -5,15 +5,16 @@
 
 #define BUFF_SIZE 1024
 
-void open_and_print_file(char *path) {
+void open_and_print_file(const char *path) {
   FILE *fp;
   char buff[BUFF_SIZE];
 
   printf("-= %s =-\n", path);
   fp = fopen(path, "r");
   if (!fp) {
-    printf("!> Incorrect path, permissions issue or buy more ram.\n");
-    exit(EXIT_FAILURE);
+    perror("!> fopen() failed");
+    putc('\n', stdout);
+    return;
   }
   while (fgets(buff, BUFF_SIZE, fp)) {
     fputs(buff, stdout);
@@ -24,12 +25,11 @@ void open_and_print_file(char *path) {
 
 int main(int argc, char *argv[]) {
   if (argc == 1) {
-    printf("!> Not enough argumets. Try \"./[program_name] help\" for help.\n");
+    printf("!> Not enough arguments. Try \"%s help\" for help.\n", argv[0]);
     return EXIT_FAILURE;
   }
   if (!strcmp(argv[1], "help")) {
-    printf("Help Menu:\n   Usage: program_name \"FILE_NAME1\" "
-           "...\n");
+    printf("Help Menu:\n   Usage: %s \"FILE_NAME1\" ...\n", argv[0]);
     return EXIT_SUCCESS;
   }
 
