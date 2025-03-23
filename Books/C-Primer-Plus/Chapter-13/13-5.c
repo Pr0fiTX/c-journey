@@ -40,6 +40,7 @@ int main(int argc, char *argv[]) {
   int r_buff[NUMBERS_COUNT]; // buffer for '-r' piece of code
   unsigned long num_index = 0;
   int num;
+  char *num_endptr;
 
   if (argc != 2) {
     printf("!> Invalid count of arguments. Try '%s -h' for more information.\n",
@@ -75,7 +76,11 @@ int main(int argc, char *argv[]) {
               open_dat_file("rb"))) { // If func. returned NULL (error occured)
       return EXIT_FAILURE;            // killing the program
     }
-    fread(r_buff, sizeof(int), NUMBERS_COUNT, dat_fp);
+    if (fread(r_buff, sizeof(int), NUMBERS_COUNT, dat_fp) != NUMBERS_COUNT) {
+      printf("!> Error while reading .dat file. Try regenerate him.\n");
+      fclose(dat_fp);
+      return EXIT_FAILURE;
+    }
     for (int i = 0; i < NUMBERS_COUNT; i++) {
       printf("%d ", r_buff[i]);
     }
@@ -84,7 +89,9 @@ int main(int argc, char *argv[]) {
     fclose(dat_fp);
     return EXIT_SUCCESS;
   }
-  if ((num_index = strtoul(argv[1], NULL, 10)) && num_index < 1000) {
+  num_index =
+      strtoul(argv[1], &num_endptr, 10); // Convert possible index char -> int
+  if (*num_endptr == '\0' && num_index < 1000) {
     printf("=> Searching...\n");
     if (!(dat_fp = open_dat_file("rb"))) {
       return EXIT_FAILURE;
