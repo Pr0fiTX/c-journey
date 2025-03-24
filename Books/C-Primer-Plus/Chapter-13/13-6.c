@@ -9,12 +9,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define FILE_NAME_MAX_SIZE 1024   // In Bytes (I don't know why exactly 1024 XD)
-#define COMPRESS_BUFFER_SIZE 4096 // In Bytes (I think that's enough)
+#define FILE_NAME_MAX_SIZE                                                     \
+  1024 // In Bytes (Corresponding for all existing limits)
+#define COMPRESS_BUFFER_SIZE 4096 // In Bytes (Enough for the string buffer)
 
 /*
- * Reading SOURCE file content to the array -> removing every 3rd caharcter ->
- * copying this array into the "source_file_name.red"
+ * Reading SOURCE file content to the array -> copying to the COMPRESSED FILE
+ * every 3rd caharcter
  * @args: pointer to the SOURCE file, path to the SOURCE file (changing)
  */
 void compress_and_copy_in_file(FILE *source_fp, char *s_path) {
@@ -49,7 +50,6 @@ void compress_and_copy_in_file(FILE *source_fp, char *s_path) {
 int main(void) {
   char source_file_name[FILE_NAME_MAX_SIZE];
   FILE *source_fp;
-  FILE *compressed_fp;
 
   // Requesting the SOURCE file path from the user
   printf("?> Enter the path to the file you want to compress: ");
